@@ -10,39 +10,38 @@ function App() {
   const [toys, setToys] = useState([]);
   const [showForm, setShowForm] = useState(false);
 
-  // =========================
-  // GET TOYS ON PAGE LOAD
-  // =========================
+  // ======================
+  // GET TOYS
+  // ======================
   useEffect(() => {
     fetch(API)
       .then((res) => res.json())
       .then((data) => setToys(data));
   }, []);
 
-  // toggle form
-  function handleClick() {
+  function toggleForm() {
     setShowForm((prev) => !prev);
   }
 
-  // =========================
-  // CREATE (POST)
-  // =========================
-  function addToy(toy) {
+  // ======================
+  // CREATE TOY (POST)
+  // ======================
+  function addToy(newToy) {
     fetch(API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...toy, likes: 0 }),
+      body: JSON.stringify({ ...newToy, likes: 0 }),
     })
       .then((res) => res.json())
-      .then((newToy) => {
-        setToys((prev) => [...prev, newToy]);
+      .then((createdToy) => {
+        setToys((prev) => [...prev, createdToy]);
       });
   }
 
-  // =========================
-  // UPDATE (PATCH - LIKE)
-  // =========================
-  function likeToy(toy) {
+  // ======================
+  // ❤️ LIKE FEATURE (PATCH)
+  // ======================
+  function handleLikeToy(toy) {
     fetch(`${API}/${toy.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -56,10 +55,10 @@ function App() {
       });
   }
 
-  // =========================
-  // DELETE (DONATE)
-  // =========================
-  function deleteToy(id) {
+  // ======================
+  // 🗑️ DONATE FEATURE (DELETE)
+  // ======================
+  function handleDonateToy(id) {
     fetch(`${API}/${id}`, {
       method: "DELETE",
     }).then(() => {
@@ -72,15 +71,15 @@ function App() {
       <Header />
 
       <div className="buttonContainer">
-        <button onClick={handleClick}>Add a Toy</button>
+        <button onClick={toggleForm}>Add a Toy</button>
       </div>
 
       {showForm && <ToyForm addToy={addToy} />}
 
       <ToyContainer
         toys={toys}
-        onLike={likeToy}
-        onDelete={deleteToy}
+        onLikeToy={handleLikeToy}
+        onDonateToy={handleDonateToy}
       />
     </>
   );

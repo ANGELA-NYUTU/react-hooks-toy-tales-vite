@@ -1,15 +1,15 @@
 import React from "react";
 import ToyCard from "./ToyCard";
 
-function ToyContainer({ toys, onLike, onDelete }) {
+function ToyContainer({ toys, onLikeToy, onDonateToy }) {
   return (
     <div id="toy-collection">
       {toys.map((toy) => (
         <ToyCard
           key={toy.id}
           toy={toy}
-          onLike={onLike}
-          onDelete={onDelete}
+          onLikeToy={onLikeToy}
+          onDonateToy={onDonateToy}
         />
       ))}
     </div>

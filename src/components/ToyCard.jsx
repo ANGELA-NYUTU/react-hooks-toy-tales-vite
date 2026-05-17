@@ -1,23 +1,21 @@
 import React from "react";
 
-function ToyCard({ toy, onLike, onDelete }) {
+function ToyCard({ toy, onLikeToy, onDonateToy }) {
   return (
     <div className="card" data-testid="toy-card">
       <h2>{toy.name}</h2>
 
-      <img
-        src={toy.image}
-        alt={toy.name}
-        className="toy-avatar"
-      />
+      <img src={toy.image} alt={toy.name} />
 
       <p>{toy.likes} Likes </p>
 
-      <button onClick={() => onLike(toy)}>
+      {/* ❤️ LIKE FEATURE */}
+      <button onClick={() => onLikeToy(toy)}>
         Like &lt;3
       </button>
 
-      <button onClick={() => onDelete(toy.id)}>
+      {/* 🗑️ DONATE FEATURE */}
+      <button onClick={() => onDonateToy(toy.id)}>
         Donate to GoodWill
       </button>
     </div>
